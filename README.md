@@ -53,14 +53,27 @@ sub CLONE {
 
 ## NOTES
 
-This project shows a way to integrate perl with external C library/server using [Inline::C](https://metacpan.org/pod/distribution/Inline-C/lib/Inline/C.pod) (for inexperient C developers like me).
+This project shows a way to integrate/embed perl with external C library/server using [Inline::C](https://metacpan.org/pod/distribution/Inline-C/lib/Inline/C.pod) (for inexperient C developers like me).
 
-External dependencies:
+External dependencies (source included):
  * Libevent branch "master" (2.1.5-beta)
    * "file segments" dependency.
 
  * Libevhtp fork car3ca/libevhtp, branch "feature/no_auto_ctype"
    * no automatic content-type header (HTTP 304 compliant)
+
+## INSTALATION
+
+Dependencies:
+ * CMake
+
+To install this module, run the following commands:
+```
+perl Makefile.PL
+make
+make test
+make install
+```
 
 ## PERFORMANCE
 
