@@ -1,6 +1,6 @@
 [submodule "libevent"]
-    path = libevent
+    path = ext/libevent
     url = https://github.com/libevent/libevent.git
 [submodule "libevhtp"]
-    path = libevhtp
+    path = ext/libevhtp
     url = https://github.com/car3ca/libevhtp.git
