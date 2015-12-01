@@ -36,7 +36,7 @@ if (not(-e $libevhtp_build)) {
 }
 chdir $libevhtp_build
     or die "Can't chdir $libevhtp_build";
-system("cmake -DEVHTP_BUILD_SHARED=ON ..") == 0
+system("cmake -DEVHTP_BUILD_SHARED=ON -DLIBEVENT_INCLUDE_DIR='$libevent_path/include;$libevent_build/include' -DLIBEVENT_LIBRARY='$libevent_build/lib/libevent.so' -DLIBEVENT_PTHREADS_LIBRARY='$libevent_build/lib/libevent.so' ..") == 0
     or die "Can't cmake libevhtp. Maybe you need to install cmake.";
 system("make") == 0
     or die "Can't make libevhtp.";
