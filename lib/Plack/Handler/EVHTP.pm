@@ -19,9 +19,10 @@ BEGIN {
 
 use Plack::Handler::EVHTP::Inline 'C' => 'lib/Plack/Handler/plack_evhtp.c',
     inc => "-I$module_root/ext/libevhtp -I$module_root/ext/libevhtp/build -I$module_root/ext/libevhtp/oniguruma -I$module_root/ext/libevent/build/include  -I$module_root/ext/libevent/include",
-    ccflags => '-c -g -Wall -rdynamic',
+    ccflags => '-c -O3 -g -Wall -rdynamic',
+    myextlib => "$module_root/ext/libevhtp/build/libevhtp.a $module_root/ext/libevent/build/lib/libevent.a",
     clean_after_build => 1,
-    libs => "-L$module_root/ext/libevent/build/lib -levent -L$module_root/ext/libevhtp/build -levhtp"
+    libs => "-lssl",
     ;
 
 
