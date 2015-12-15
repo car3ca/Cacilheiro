@@ -394,6 +394,7 @@ These tests were performed locally on a HP Z230 Workstation:
 =head1 TODO
 
     * Alias Plack::Handler::EVHTP
+    * Preclone (prefork) a context per thread
     * Max keepalive requests
     * SSL
     * Graceful restarts
@@ -416,6 +417,8 @@ L<Mark Ellzey|https://github.com/ellzey> for L<libevhtp|https://github.com/ellze
 L<Tatsuhiko Miyagawa|https://metacpan.org/author/MIYAGAWA> for his work on L<Plack>.
 
 L<Ingy döt Net|https://metacpan.org/author/INGY> for his work on L<Inline>.
+
+L<Dinis Rebolo|https://metacpan.org/author/DREBOLO> for testing this module.
 
 =head1 COPYRIGHT AND LICENSE
 
