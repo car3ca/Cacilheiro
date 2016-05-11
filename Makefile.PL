@@ -44,10 +44,10 @@ chdir $start_dir
     or die "Can't chdir to $start_dir";
 
 WriteMakefile(
-    NAME             => 'Plack::Handler::EVHTP',
+    NAME             => 'Cacilheiro',
     AUTHOR           => q{careca <car3ca@iberiancode.com>},
-    VERSION_FROM     => 'lib/Plack/Handler/EVHTP.pm',
-    ABSTRACT_FROM    => 'lib/Plack/Handler/EVHTP.pm',
+    VERSION_FROM     => 'lib/Cacilheiro.pm',
+    ABSTRACT_FROM    => 'lib/Cacilheiro.pm',
     LICENSE          => 'Artistic_2_0',
     PL_FILES         => {},
     MIN_PERL_VERSION => 5.010,
