@@ -19,7 +19,7 @@ if (not(-e $libevent_build)) {
 }
 chdir $libevent_build
     or die "Can't chdir $libevent_build";
-system("cmake -DEVENT__BUILD_SHARED_LIBRARIES=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON ..") == 0
+system("cmake -DEVENT__BUILD_SHARED_LIBRARIES=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS='-O2' -DCMAKE_POSITION_INDEPENDENT_CODE=ON ..") == 0
     or die "Can't cmake libevent. Maybe you need to install cmake.";
 system("make") == 0
     or die "Can't make libevent.";
@@ -36,7 +36,7 @@ if (not(-e $libevhtp_build)) {
 }
 chdir $libevhtp_build
     or die "Can't chdir $libevhtp_build";
-system("cmake -DEVHTP_BUILD_SHARED=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DLIBEVENT_INCLUDE_DIR='$libevent_path/include;$libevent_build/include' -DLIBEVENT_LIBRARY='$libevent_build/lib/libevent.a' -DLIBEVENT_PTHREADS_LIBRARY='$libevent_build/lib/libevent.a' ..") == 0
+system("cmake -DEVHTP_BUILD_SHARED=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS='-O2' -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DLIBEVENT_INCLUDE_DIR='$libevent_path/include;$libevent_build/include' -DLIBEVENT_LIBRARY='$libevent_build/lib/libevent.a' -DLIBEVENT_PTHREADS_LIBRARY='$libevent_build/lib/libevent.a' ..") == 0
     or die "Can't cmake libevhtp. Maybe you need to install cmake.";
 system("make") == 0
     or die "Can't make libevhtp.";
