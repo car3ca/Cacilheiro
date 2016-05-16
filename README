@@ -1,8 +1,8 @@
-NAME
-    Cacilheiro - High performance Plack handler using very fast libevhtp
+  NAME
+    Cacilheiro - High performance PSGI handler using very fast libevhtp
     <https://github.com/ellzey/libevhtp> HTTP API.
 
-SYNOPSIS
+  SYNOPSIS
     Run app.psgi with default settings.
 
         plackup -s Cacilheiro
@@ -11,8 +11,8 @@ SYNOPSIS
 
         plackup -s Cacilheiro -E production --host 0.0.0.0 --port 5001 --max-workers 8 --max-reqs-per-child 1000000 -a that-app.psgi
 
-DESCRIPTION
-    Cacilheiro is a PSGI Handler that uses libevhtp
+  DESCRIPTION
+    Cacilheiro is a Plack Handler that uses libevhtp
     <https://github.com/ellzey/libevhtp> fast, multi-threaded HTTP API and
     libevent2 <http://libevent.org/>.
 
@@ -24,21 +24,21 @@ DESCRIPTION
     context won't be cloned and renewd (--max-reqs-per-child=Inf). Maximum
     requests per child should be kept high due to expensive perl_clone.
 
-OPTIONS
-    --host (default: 0.0.0.0)
-        Server bind address.
+  OPTIONS
+   --host (default: 0.0.0.0)
+    Server bind address.
 
-    --port (default: 5000)
-        Server bind port.
+   --port (default: 5000)
+    Server bind port.
 
-    --max-workers (default: 8)
-        Server worker threads.
+   --max-workers (default: 8)
+    Server worker threads.
 
-    --max-reqs-per-child (default: 0)
-        Maximum number of requests to be handled before a perl context gets
-        renewed (app clone). Disabled by default (app won't get renewed).
+   --max-reqs-per-child (default: 0)
+    Maximum number of requests to be handled before a perl context gets
+    renewed (app clone). Disabled by default (app won't get renewed).
 
-CLONE HANDLING EXAMPLE
+  CLONE HANDLING EXAMPLE
         ...
         use DBI;
 
@@ -52,9 +52,9 @@ CLONE HANDLING EXAMPLE
         }
         ...
 
-NOTES
+  NOTES
     This development aimed at delivering the fastest PSGI Handler to Perl.
-    This project also shows a way to embed perl with external C server
+    This project also shows a way to embed perl with an external C server
     (library) using Inline::C.
 
     External dependencies (source included):
@@ -67,7 +67,7 @@ NOTES
 
         *   no automatic content-type header (HTTP 304 compliant)
 
-INSTALATION
+  INSTALATION
     Dependencies:
 
     CMake
@@ -79,7 +79,10 @@ INSTALATION
         make test
         make install
 
-PERFORMANCE
+    Use git clone --recursive for submodule inclusion if installing from
+    repo.
+
+  PERFORMANCE
     These tests were performed locally on a HP Z230 Workstation:
 
     *   Ubuntu 14.04 LTS (64-bit)
@@ -88,7 +91,7 @@ PERFORMANCE
 
     *   Perl 5.14.4 (usethreads)
 
-  High concurrency comparison (8192 concurrent connections):
+   High concurrency comparison (8192 concurrent connections):
     In this comparision its possible to highlight positively:
 
     *   Cacilheiro for its performance and low error ratio
@@ -99,7 +102,7 @@ PERFORMANCE
 
     *   Gazelle for its high error ratio
 
-  Medium concurrency comparison (256 concurrent connections):
+   Medium concurrency comparison (256 concurrent connections):
     In this comparision its possible to highlight positively:
 
     *   Cacilheiro for its performance and zero error ratio
@@ -110,13 +113,14 @@ PERFORMANCE
 
     *   Gazelle for its error ratio
 
-  Low concurrency comparison (16 concurrent connections):
+   Low concurrency comparison (16 concurrent connections):
     In this comparision its possible to highlight positively:
 
     *   Cacilheiro for its performance and low latency
 
-  Cacilheiro benchmark
-    plackup -E prod -s Cacilheiro --port 5001 --max-workers 8 --max-reqs-per-child 99999999 --max-keepalive-reqs 99999999 -e "sub {[200, ['Content-Type' => 'text/html'], ['Hello World']]}"
+   Cacilheiro benchmark
+        plackup -E prod -s Cacilheiro --port 5001 --max-workers 8 --max-reqs-per-child 99999999 --max-keepalive-reqs 99999999 -e "sub {[200, ['Content-Type' => 'text/html'], ['Hello World']]}"
+
         ./wrk -t 4 -c 8192 --latency -d 20s 'http://localhost:5001'
         Running 20s test @ http://localhost:5001
           4 threads and 8192 connections
@@ -163,8 +167,9 @@ PERFORMANCE
         Requests/sec: 148948.90
         Transfer/sec:     15.06MB
 
-  Starlet benchmark
-    plackup -E prod -s Starlet --port 5001 --max-workers 8 --max-reqs-per-child 99999999 --max-keepalive-reqs 99999999 -e "sub {[200, ['Content-Type' => 'text/html'], ['Hello World']]}"
+   Starlet benchmark
+        plackup -E prod -s Starlet --port 5001 --max-workers 8 --max-reqs-per-child 99999999 --max-keepalive-reqs 99999999 -e "sub {[200, ['Content-Type' => 'text/html'], ['Hello World']]}"
+
         ./wrk -t 4 -c 8192 --latency -d 20s 'http://localhost:5001'
         Running 20s test @ http://localhost:5001
           4 threads and 8192 connections
@@ -211,8 +216,9 @@ PERFORMANCE
         Requests/sec: 101650.33
         Transfer/sec:     15.80MB
 
-  Gazelle (via nginx) benchmark
-    start_server --path /dev/shm/app.sock --backlog 16384 -- plackup -s Gazelle -workers=8 --max-reqs-per-child 99999999 --min-reqs-per-child 99999999 -E production -e "sub {[200, ['Content-Type' => 'text/html'], ['Hello World']]}"
+   Gazelle (via nginx) benchmark
+        start_server --path /dev/shm/app.sock --backlog 16384 -- plackup -s Gazelle -workers=8 --max-reqs-per-child 99999999 --min-reqs-per-child 99999999 -E production -e "sub {[200, ['Content-Type' => 'text/html'], ['Hello World']]}"
+
         ./wrk -t 4 -c 8192 --latency -d 20s 'http://localhost/gazelle'
         Running 20s test @ http://localhost/gazelle
           4 threads and 8192 connections
@@ -261,8 +267,8 @@ PERFORMANCE
         Requests/sec:  81977.78
         Transfer/sec:     14.38MB
 
-TODO
-        * Preclone (prefork) a context per thread
+  TODO
+        * Preclone (prefork) context(s)
         * Max keepalive requests
         * SSL
         * Graceful restarts
@@ -274,10 +280,10 @@ TODO
         * More documentation
         * Try other integrations (ex.: [h2o](https://h2o.examp1e.net/))
 
-AUTHORS
+  AUTHORS
     Pedro Rodrigues (careca) "<car3ca at iberiancode.com>"
 
-THANKS TO
+  THANKS TO
     Mark Ellzey <https://github.com/ellzey> for libevhtp
     <https://github.com/ellzey/libevhtp>.
 
@@ -289,8 +295,8 @@ THANKS TO
     Dinis Rebolo <https://metacpan.org/author/DREBOLO> for testing this
     module.
 
-COPYRIGHT AND LICENSE
-    Copyright 2014 Pedro Rodrigues (careca).
+  COPYRIGHT AND LICENSE
+    Copyright 2016 Pedro Rodrigues (careca).
 
     This program is free software; you can redistribute it and/or modify it
     under the terms of the the Artistic License (2.0). You may obtain a copy

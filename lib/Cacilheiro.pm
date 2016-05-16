@@ -93,6 +93,7 @@ External dependencies (source included):
 
 =back
 
+
 =head2 INSTALATION
 
 Dependencies:
@@ -109,6 +110,8 @@ To install this module, run the following commands:
     make
     make test
     make install
+
+Use git clone --recursive for submodule inclusion if installing from repo.
 
 =head2 PERFORMANCE
 

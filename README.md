@@ -87,6 +87,8 @@ make test
 make install
 ```
 
+Use git clone --recursive for submodule inclusion if installing from repo.
+
 ## PERFORMANCE
 
 These tests were performed locally on a HP Z230 Workstation:
