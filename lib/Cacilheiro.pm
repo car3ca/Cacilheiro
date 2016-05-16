@@ -9,11 +9,11 @@ __END__
 
 =encoding utf-8
 
-=head1 NAME
+=head2 NAME
 
-Cacilheiro - High-performance PSGI/Plack web server using L<libevhtp|https://github.com/ellzey/libevhtp>.
+Cacilheiro - High performance PSGI handler using very fast L<libevhtp|https://github.com/ellzey/libevhtp> HTTP API.
 
-=head1 SYNOPSIS
+=head2 SYNOPSIS
 
 Run app.psgi with default settings.
 
@@ -23,38 +23,35 @@ Run that-app.psgi with some settings.
 
     plackup -s Cacilheiro -E production --host 0.0.0.0 --port 5001 --max-workers 8 --max-reqs-per-child 1000000 -a that-app.psgi
 
-=head1 DESCRIPTION
+=head2 DESCRIPTION
 
-Cacilheiro is a web server that uses L<libevhtp|https://github.com/ellzey/libevhtp> and L<libevent2|http://libevent.org/>.
+Cacilheiro is a Plack Handler that uses L<libevhtp|https://github.com/ellzey/libevhtp> fast, multi-threaded HTTP API and L<libevent2|http://libevent.org/>.
 
 Cacilheiro launches libevhtp server that becomes responsible for all incoming connections and request handling.
 
 This server should be used with a B<multi-threaded perl> to allow cloning and management of perl contexts in libevhtp B<(p)threads>, otherwise perl context won't be cloned and renewd (--max-reqs-per-child=Inf). B<Maximum requests per child> should be kept B<high> due to expensive perl_clone.
 
-=head1 OPTIONS
+=head2 OPTIONS
 
-=over
-
-=item --host (default: 0.0.0.0)
+=head3 --host (default: 0.0.0.0)
 
 Server bind address.
 
-=item --port (default: 5000)
+=head3 --port (default: 5000)
 
 Server bind port.
 
-=item --max-workers (default: 8)
+=head3 --max-workers (default: 8)
 
 Server worker threads.
 
-=item --max-reqs-per-child (default: 0)
+=head3 --max-reqs-per-child (default: 0)
 
 Maximum number of requests to be handled before a perl context gets renewed (app clone).
 Disabled by default (app won't get renewed).
 
-=back
 
-=head1 CLONE HANDLING EXAMPLE
+=head2 CLONE HANDLING EXAMPLE
 
     ...
     use DBI;
@@ -69,9 +66,10 @@ Disabled by default (app won't get renewed).
     }
     ...
 
-=head1 NOTES
+=head2 NOTES
 
-This project shows a way to integrate/embed perl with external C library/server using L<Inline::C> (for inexperient C developers like me).
+This development aimed at delivering the fastest PSGI Handler to Perl.
+This project also shows a way to embed perl with an external C server (library) using L<Inline::C>.
 
 External dependencies (source included):
 
@@ -95,7 +93,7 @@ External dependencies (source included):
 
 =back
 
-=head1 INSTALATION
+=head2 INSTALATION
 
 Dependencies:
 
@@ -112,7 +110,7 @@ To install this module, run the following commands:
     make test
     make install
 
-=head1 PERFORMANCE
+=head2 PERFORMANCE
 
 These tests were performed locally on a HP Z230 Workstation:
 
@@ -126,175 +124,242 @@ These tests were performed locally on a HP Z230 Workstation:
 
 =back
 
-=head2 Graphs for 512 concurrent connections (2nd test):
+=head3 High concurrency comparison (8192 concurrent connections):
 
-=begin HTML
+In this comparision its possible to highlight positively:
+
+=over
+
+=item * Cacilheiro for its performance and low error ratio
+
+=item * Starlet for its low latency under high concurrency
+
+=back
+
+and negatively:
+
+=over
+
+=item * Gazelle for its high error ratio
+
+=back
+
+=begin html
 
 <p>
-<img src="https://github.com/car3ca/Cacilheiro/raw/develop/doc/img/reqs_sec_512.png" alt="Reqs/sec graph">
-<img src="https://github.com/car3ca/Cacilheiro/raw/develop/doc/img/avg_lat_512.png" alt="Avg latency graph">
-<img src="https://github.com/car3ca/Cacilheiro/raw/develop/doc/img/tot_err_512.png" alt="Errors graph">
+<img src="https://github.com/car3ca/Cacilheiro/raw/develop/doc/img/cacilheiro-req-sec-8192.png" alt="Performance (reqs/sec) graph">
+<img src="https://github.com/car3ca/Cacilheiro/raw/develop/doc/img/cacilheiro-avg-lat-8192.png" alt="Avg latency (ms) graph">
+<img src="https://github.com/car3ca/Cacilheiro/raw/develop/doc/img/cacilheiro-err-8192.png" alt="Errors (%) graph">
 </p>
 
-=end HTML
+=end html
 
-=head2 Cacilheiro (EVHTP)
+=head3 Medium concurrency comparison (256 concurrent connections):
+
+In this comparision its possible to highlight positively:
+
+=over
+
+=item * Cacilheiro for its performance and zero error ratio
+
+=item * Starlet for its low latency and zero error ratio
+
+=back
+
+and negatively:
+
+=over
+
+=item * Gazelle for its error ratio
+
+=back
+
+=begin html
+
+<p>
+<img src="https://github.com/car3ca/Cacilheiro/raw/develop/doc/img/cacilheiro-req-sec-256.png" alt="Performance (reqs/sec) graph">
+<img src="https://github.com/car3ca/Cacilheiro/raw/develop/doc/img/cacilheiro-avg-lat-256.png" alt="Avg latency (ms) graph">
+<img src="https://github.com/car3ca/Cacilheiro/raw/develop/doc/img/cacilheiro-err-256.png" alt="Errors (%) graph">
+</p>
+
+=end html
+
+=head3 Low concurrency comparison (16 concurrent connections):
+
+In this comparision its possible to highlight positively:
+
+=over
+
+=item * Cacilheiro for its performance and low latency
+
+=back
+
+=begin html
+
+<p>
+<img src="https://github.com/car3ca/Cacilheiro/raw/develop/doc/img/cacilheiro-req-sec-16.png" alt="Performance (reqs/sec) graph">
+<img src="https://github.com/car3ca/Cacilheiro/raw/develop/doc/img/cacilheiro-avg-lat-16.png" alt="Avg latency (ms) graph">
+<img src="https://github.com/car3ca/Cacilheiro/raw/develop/doc/img/cacilheiro-err-16.png" alt="Errors (%) graph">
+</p>
+
+=end html
+
+=head3 Cacilheiro benchmark
 
     plackup -E prod -s Cacilheiro --port 5001 --max-workers 8 --max-reqs-per-child 99999999 --max-keepalive-reqs 99999999 -e "sub {[200, ['Content-Type' => 'text/html'], ['Hello World']]}"
 
-    ./wrk -t 8 -c 8192 --latency -d 10s 'http://localhost:5001'
-    Running 10s test @ http://localhost:5001
-      8 threads and 8192 connections
+    ./wrk -t 4 -c 8192 --latency -d 20s 'http://localhost:5001'
+    Running 20s test @ http://localhost:5001
+      4 threads and 8192 connections
       Thread Stats   Avg      Stdev     Max   +/- Stdev
-        Latency    47.67ms  133.14ms   2.00s    96.79%
-        Req/Sec    21.64k     7.55k   49.76k    71.16%
+        Latency    29.83ms   58.72ms   1.67s    97.32%
+        Req/Sec    43.50k    15.04k   92.32k    73.34%
       Latency Distribution
-         50%   27.07ms
-         75%   35.70ms
-         90%   47.44ms
-         99%  796.42ms
-      1728749 requests in 10.07s, 174.76MB read
-      Socket errors: connect 0, read 397, write 0, timeout 997
-    Requests/sec: 171657.69
-    Transfer/sec:     17.35MB
+         50%   20.69ms
+         75%   34.73ms
+         90%   53.76ms
+         99%  138.30ms
+      3397830 requests in 20.11s, 343.48MB read
+      Socket errors: connect 0, read 296, write 0, timeout 255
+    Requests/sec: 168975.32
+    Transfer/sec:     17.08MB
 
-    ./wrk -t 8 -c 512 --latency -d 10s 'http://localhost:5001'
-    Running 10s test @ http://localhost:5001
-      8 threads and 512 connections
+    ./wrk -t 2 -c 256 --latency -d 20s 'http://localhost:5001'
+    Running 20s test @ http://localhost:5001
+      2 threads and 256 connections
       Thread Stats   Avg      Stdev     Max   +/- Stdev
-        Latency     3.27ms   13.34ms 422.02ms   99.10%
-        Req/Sec    27.16k     9.15k   61.62k    73.38%
+        Latency     1.85ms    3.04ms  42.90ms   91.11%
+        Req/Sec   103.82k     5.38k  119.34k    71.50%
       Latency Distribution
-         50%    2.00ms
-         75%    3.23ms
-         90%    4.59ms
-         99%   15.87ms
-      2175005 requests in 10.09s, 219.87MB read
-    Requests/sec: 215542.92
-    Transfer/sec:     21.79MB
+         50%    0.88ms
+         75%    1.29ms
+         90%    4.22ms
+         99%   15.93ms
+      4136475 requests in 20.04s, 418.15MB read
+    Requests/sec: 206448.66
+    Transfer/sec:     20.87MB
 
-    ./wrk -t 8 -c 128 --latency -d 10s 'http://localhost:5001'
-    Running 10s test @ http://localhost:5001
-      8 threads and 128 connections
+    ./wrk -t 1 -c 16 --latency -d 20s 'http://localhost:5001'
+    Running 20s test @ http://localhost:5001
+      1 threads and 16 connections
       Thread Stats   Avg      Stdev     Max   +/- Stdev
-        Latency   837.04us    1.32ms  33.41ms   93.20%
-        Req/Sec    25.88k     7.63k  125.34k    81.40%
+        Latency   102.54us  251.75us  16.13ms   99.40%
+        Req/Sec   149.74k     5.14k  160.01k    85.50%
       Latency Distribution
-         50%  545.00us
-         75%  749.00us
-         90%    1.53ms
-         99%    6.46ms
-      2065602 requests in 10.09s, 208.81MB read
-    Requests/sec: 204678.75
-    Transfer/sec:     20.69MB
+         50%   87.00us
+         75%   97.00us
+         90%  114.00us
+         99%  204.00us
+      2979166 requests in 20.00s, 301.16MB read
+    Requests/sec: 148948.90
+    Transfer/sec:     15.06MB
 
-
-=head2 Starlet
+=head3 Starlet benchmark
 
     plackup -E prod -s Starlet --port 5001 --max-workers 8 --max-reqs-per-child 99999999 --max-keepalive-reqs 99999999 -e "sub {[200, ['Content-Type' => 'text/html'], ['Hello World']]}"
 
-    ./wrk -t 8 -c 8192 --latency -d 10s 'http://localhost:5001'
-    Running 10s test @ http://localhost:5001
-      8 threads and 8192 connections
+    ./wrk -t 4 -c 8192 --latency -d 20s 'http://localhost:5001'
+    Running 20s test @ http://localhost:5001
+      4 threads and 8192 connections
       Thread Stats   Avg      Stdev     Max   +/- Stdev
-        Latency    80.89us  212.35us  29.57ms   99.81%
-        Req/Sec    16.17k     5.72k   27.45k    72.33%
+        Latency    75.67us  270.68us  48.24ms   99.46%
+        Req/Sec    48.34k    14.20k   81.68k    67.00%
       Latency Distribution
-         50%   77.00us
-         75%   82.00us
-         90%   93.00us
-         99%  160.00us
-      966518 requests in 10.04s, 150.24MB read
-      Socket errors: connect 0, read 7755, write 0, timeout 0
-    Requests/sec:  96262.10
-    Transfer/sec:     14.96MB
+         50%   59.00us
+         75%   64.00us
+         90%   91.00us
+         99%  176.00us
+      1923337 requests in 20.06s, 298.98MB read
+      Socket errors: connect 0, read 6269, write 0, timeout 0
+    Requests/sec:  95861.99
+    Transfer/sec:     14.90MB
 
-    ./wrk -t 8 -c 512 --latency -d 10s 'http://localhost:5001'
-    Running 10s test @ http://localhost:5001
-      8 threads and 512 connections
+    ./wrk -t 2 -c 256 --latency -d 20s 'http://localhost:5001'
+    Running 20s test @ http://localhost:5001
+      2 threads and 256 connections
       Thread Stats   Avg      Stdev     Max   +/- Stdev
-        Latency    82.73us  218.92us  16.76ms   99.71%
-        Req/Sec    15.86k     7.50k   41.80k    82.50%
+        Latency    82.41us  406.01us  64.14ms   99.42%
+        Req/Sec    48.26k    34.76k  106.77k    55.75%
       Latency Distribution
-         50%   80.00us
-         75%   82.00us
-         90%   86.00us
-         99%  215.00us
-      947125 requests in 10.06s, 147.23MB read
-      Socket errors: connect 0, read 20, write 0, timeout 0
-    Requests/sec:  94178.97
-    Transfer/sec:     14.64MB
+         50%   59.00us
+         75%   65.00us
+         90%   94.00us
+         99%  244.00us
+      1920306 requests in 20.03s, 298.51MB read
+    Requests/sec:  95868.99
+    Transfer/sec:     14.90MB
 
-    ./wrk -t 8 -c 128 --latency -d 10s 'http://localhost:5001'
-    Running 10s test @ http://localhost:5001
-      8 threads and 128 connections
+    ./wrk -t 1 -c 16 --latency -d 20s 'http://localhost:5001'
+    Running 20s test @ http://localhost:5001
+      1 threads and 16 connections
       Thread Stats   Avg      Stdev     Max   +/- Stdev
-        Latency    76.54us  273.81us  27.25ms   99.18%
-        Req/Sec    55.09k    25.44k   98.39k    60.40%
+        Latency   125.05us  580.15us  23.91ms   98.36%
+        Req/Sec   102.23k    12.36k  112.43k    81.50%
       Latency Distribution
-         50%   57.00us
-         75%   60.00us
-         90%   85.00us
-         99%  294.00us
-      1106791 requests in 10.10s, 172.05MB read
-    Requests/sec: 109598.32
-    Transfer/sec:     17.04MB
+         50%   60.00us
+         75%   65.00us
+         90%   98.00us
+         99%    1.70ms
+      2033069 requests in 20.00s, 316.04MB read
+    Requests/sec: 101650.33
+    Transfer/sec:     15.80MB
 
 
-=head2 Gazelle (via nginx)
+=head3 Gazelle (via nginx) benchmark
 
     start_server --path /dev/shm/app.sock --backlog 16384 -- plackup -s Gazelle -workers=8 --max-reqs-per-child 99999999 --min-reqs-per-child 99999999 -E production -e "sub {[200, ['Content-Type' => 'text/html'], ['Hello World']]}"
 
-    Running 10s test @ http://localhost/gazelle
-      8 threads and 8192 connections
+    ./wrk -t 4 -c 8192 --latency -d 20s 'http://localhost/gazelle'
+    Running 20s test @ http://localhost/gazelle
+      4 threads and 8192 connections
       Thread Stats   Avg      Stdev     Max   +/- Stdev
-        Latency    23.47ms   95.68ms   1.86s    98.20%
-        Req/Sec    14.85k     5.66k   39.62k    61.05%
+        Latency    33.12ms   88.26ms   2.00s    97.65%
+        Req/Sec    19.89k     7.24k   73.21k    77.11%
       Latency Distribution
-         50%   11.23ms
-         75%   18.43ms
-         90%   27.80ms
-         99%  337.63ms
-      1167517 requests in 10.09s, 231.25MB read
-      Socket errors: connect 0, read 1011, write 0, timeout 131
-      Non-2xx or 3xx responses: 171098
-    Requests/sec: 115659.57
-    Transfer/sec:     22.91MB
+         50%   20.08ms
+         75%   33.92ms
+         90%   52.54ms
+         99%  291.64ms
+      1574978 requests in 20.07s, 281.73MB read
+      Socket errors: connect 0, read 1279, write 0, timeout 185
+      Non-2xx or 3xx responses: 35153
+    Requests/sec:  78481.98
+    Transfer/sec:     14.04MB
 
-    ./wrk -t 8 -c 512 --latency -d 10s 'http://localhost/gazelle'
-    Running 10s test @ http://localhost/gazelle
-      8 threads and 512 connections
+    ./wrk -t 2 -c 256 --latency -d 20s 'http://localhost/gazelle'
+    Running 20s test @ http://localhost/gazelle
+      2 threads and 256 connections
       Thread Stats   Avg      Stdev     Max   +/- Stdev
-        Latency     4.44ms    9.05ms 218.40ms   97.33%
-        Req/Sec    16.28k     4.25k   34.04k    79.95%
+        Latency     3.82ms    5.74ms  73.18ms   90.01%
+        Req/Sec    52.74k     8.73k   76.11k    70.03%
       Latency Distribution
-         50%    2.94ms
-         75%    5.14ms
-         90%    8.05ms
-         99%   22.02ms
-      1299697 requests in 10.08s, 274.36MB read
-      Non-2xx or 3xx responses: 300053
-    Requests/sec: 128921.80
-    Transfer/sec:     27.21MB
+         50%    1.55ms
+         75%    4.49ms
+         90%    9.55ms
+         99%   29.55ms
+      2104572 requests in 20.08s, 371.26MB read
+      Non-2xx or 3xx responses: 13310
+    Requests/sec: 104792.52
+    Transfer/sec:     18.49MB
 
-    ./wrk -t 8 -c 128 --latency -d 10s 'http://localhost/gazelle'
-    Running 10s test @ http://localhost/gazelle
-      8 threads and 128 connections
+    ./wrk -t 1 -c 16 --latency -d 20s 'http://localhost/gazelle'
+    Running 20s test @ http://localhost/gazelle
+      1 threads and 16 connections
       Thread Stats   Avg      Stdev     Max   +/- Stdev
-        Latency     1.39ms    2.28ms  90.08ms   95.66%
-        Req/Sec    14.07k     2.27k   20.88k    83.25%
+        Latency   214.46us  345.24us  21.17ms   96.22%
+        Req/Sec    82.45k     7.27k  101.01k    69.00%
       Latency Distribution
-         50%    0.96ms
-         75%    1.57ms
-         90%    2.49ms
-         99%    7.61ms
-      1121067 requests in 10.02s, 196.67MB read
-    Requests/sec: 111925.19
-    Transfer/sec:     19.63MB
+         50%  154.00us
+         75%  224.00us
+         90%  339.00us
+         99%    1.15ms
+      1639635 requests in 20.00s, 287.64MB read
+    Requests/sec:  81977.78
+    Transfer/sec:     14.38MB
 
-=head1 TODO
+=head2 TODO
 
-    * Preclone (prefork) a context per thread
+    * Preclone (prefork) context(s)
     * Max keepalive requests
     * SSL
     * Graceful restarts
@@ -306,11 +371,11 @@ These tests were performed locally on a HP Z230 Workstation:
     * More documentation
     * Try other integrations (ex.: [h2o](https://h2o.examp1e.net/))
 
-=head1 AUTHORS
+=head2 AUTHORS
 
 Pedro Rodrigues (careca) C<< <car3ca at iberiancode.com> >>
 
-=head1 THANKS TO
+=head2 THANKS TO
 
 L<Mark Ellzey|https://github.com/ellzey> for L<libevhtp|https://github.com/ellzey/libevhtp>.
 
@@ -320,9 +385,9 @@ L<Ingy döt Net|https://metacpan.org/author/INGY> for his work on L<Inline>.
 
 L<Dinis Rebolo|https://metacpan.org/author/DREBOLO> for testing this module.
 
-=head1 COPYRIGHT AND LICENSE
+=head2 COPYRIGHT AND LICENSE
 
-Copyright 2014 Pedro Rodrigues (careca).
+Copyright 2016 Pedro Rodrigues (careca).
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a
