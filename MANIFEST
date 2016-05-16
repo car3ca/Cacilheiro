@@ -1,4 +1,6 @@
 Changes
+lib/Cacilheiro.pm
+lib/Plack/Handler/Cacilheiro.pm
 lib/Plack/Handler/EVHTP.pm
 lib/Plack/Handler/plack_evhtp.c
 Makefile.PL
