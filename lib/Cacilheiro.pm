@@ -9,11 +9,11 @@ __END__
 
 =encoding utf-8
 
-=head2 NAME
+=head1 NAME
 
 Cacilheiro - High performance PSGI handler using very fast L<libevhtp|https://github.com/ellzey/libevhtp> HTTP API.
 
-=head2 SYNOPSIS
+=head1 SYNOPSIS
 
 Run app.psgi with default settings.
 
@@ -23,7 +23,7 @@ Run that-app.psgi with some settings.
 
     plackup -s Cacilheiro -E production --host 0.0.0.0 --port 5001 --max-workers 8 --max-reqs-per-child 1000000 -a that-app.psgi
 
-=head2 DESCRIPTION
+=head1 DESCRIPTION
 
 Cacilheiro is a Plack Handler that uses L<libevhtp|https://github.com/ellzey/libevhtp> fast, multi-threaded HTTP API and L<libevent2|http://libevent.org/>.
 
@@ -31,27 +31,27 @@ Cacilheiro launches libevhtp server that becomes responsible for all incoming co
 
 This server should be used with a B<multi-threaded perl> to allow cloning and management of perl contexts in libevhtp B<(p)threads>, otherwise perl context won't be cloned and renewd (--max-reqs-per-child=Inf). B<Maximum requests per child> should be kept B<high> due to expensive perl_clone.
 
-=head2 OPTIONS
+=head1 OPTIONS
 
-=head3 --host (default: 0.0.0.0)
+=head4 --host (default: 0.0.0.0)
 
 Server bind address.
 
-=head3 --port (default: 5000)
+=head4 --port (default: 5000)
 
 Server bind port.
 
-=head3 --max-workers (default: 8)
+=head4 --max-workers (default: 8)
 
 Server worker threads.
 
-=head3 --max-reqs-per-child (default: 0)
+=head4 --max-reqs-per-child (default: 0)
 
 Maximum number of requests to be handled before a perl context gets renewed (app clone).
 Disabled by default (app won't get renewed).
 
 
-=head2 CLONE HANDLING EXAMPLE
+=head1 CLONE HANDLING EXAMPLE
 
     ...
     use DBI;
@@ -66,7 +66,7 @@ Disabled by default (app won't get renewed).
     }
     ...
 
-=head2 NOTES
+=head1 NOTES
 
 This development aimed at delivering the fastest PSGI Handler to Perl.
 This project also shows a way to embed perl with an external C server (library) using L<Inline::C>.
@@ -94,7 +94,7 @@ External dependencies (source included):
 =back
 
 
-=head2 INSTALATION
+=head1 INSTALATION
 
 Dependencies:
 
@@ -113,7 +113,7 @@ To install this module, run the following commands:
 
 Use git clone --recursive for submodule inclusion if installing from repo.
 
-=head2 PERFORMANCE
+=head1 PERFORMANCE
 
 These tests were performed locally on a HP Z230 Workstation:
 
@@ -360,7 +360,7 @@ In this comparision its possible to highlight positively:
     Requests/sec:  81977.78
     Transfer/sec:     14.38MB
 
-=head2 TODO
+=head1 TODO
 
     * Preclone (prefork) context(s)
     * Max keepalive requests
@@ -374,11 +374,11 @@ In this comparision its possible to highlight positively:
     * More documentation
     * Try other integrations (ex.: [h2o](https://h2o.examp1e.net/))
 
-=head2 AUTHORS
+=head1 AUTHORS
 
 Pedro Rodrigues (careca) C<< <car3ca at iberiancode.com> >>
 
-=head2 THANKS TO
+=head1 THANKS TO
 
 L<Mark Ellzey|https://github.com/ellzey> for L<libevhtp|https://github.com/ellzey/libevhtp>.
 
@@ -388,7 +388,7 @@ L<Ingy döt Net|https://metacpan.org/author/INGY> for his work on L<Inline>.
 
 L<Dinis Rebolo|https://metacpan.org/author/DREBOLO> for testing this module.
 
-=head2 COPYRIGHT AND LICENSE
+=head1 COPYRIGHT AND LICENSE
 
 Copyright 2016 Pedro Rodrigues (careca).
 

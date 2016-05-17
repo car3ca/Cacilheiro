@@ -1,8 +1,8 @@
-  NAME
+NAME
     Cacilheiro - High performance PSGI handler using very fast libevhtp
     <https://github.com/ellzey/libevhtp> HTTP API.
 
-  SYNOPSIS
+SYNOPSIS
     Run app.psgi with default settings.
 
         plackup -s Cacilheiro
@@ -11,7 +11,7 @@
 
         plackup -s Cacilheiro -E production --host 0.0.0.0 --port 5001 --max-workers 8 --max-reqs-per-child 1000000 -a that-app.psgi
 
-  DESCRIPTION
+DESCRIPTION
     Cacilheiro is a Plack Handler that uses libevhtp
     <https://github.com/ellzey/libevhtp> fast, multi-threaded HTTP API and
     libevent2 <http://libevent.org/>.
@@ -24,7 +24,7 @@
     context won't be cloned and renewd (--max-reqs-per-child=Inf). Maximum
     requests per child should be kept high due to expensive perl_clone.
 
-  OPTIONS
+OPTIONS
    --host (default: 0.0.0.0)
     Server bind address.
 
@@ -38,7 +38,7 @@
     Maximum number of requests to be handled before a perl context gets
     renewed (app clone). Disabled by default (app won't get renewed).
 
-  CLONE HANDLING EXAMPLE
+CLONE HANDLING EXAMPLE
         ...
         use DBI;
 
@@ -52,7 +52,7 @@
         }
         ...
 
-  NOTES
+NOTES
     This development aimed at delivering the fastest PSGI Handler to Perl.
     This project also shows a way to embed perl with an external C server
     (library) using Inline::C.
@@ -67,7 +67,7 @@
 
         *   no automatic content-type header (HTTP 304 compliant)
 
-  INSTALATION
+INSTALATION
     Dependencies:
 
     CMake
@@ -82,7 +82,7 @@
     Use git clone --recursive for submodule inclusion if installing from
     repo.
 
-  PERFORMANCE
+PERFORMANCE
     These tests were performed locally on a HP Z230 Workstation:
 
     *   Ubuntu 14.04 LTS (64-bit)
@@ -267,7 +267,7 @@
         Requests/sec:  81977.78
         Transfer/sec:     14.38MB
 
-  TODO
+TODO
         * Preclone (prefork) context(s)
         * Max keepalive requests
         * SSL
@@ -280,10 +280,10 @@
         * More documentation
         * Try other integrations (ex.: [h2o](https://h2o.examp1e.net/))
 
-  AUTHORS
+AUTHORS
     Pedro Rodrigues (careca) "<car3ca at iberiancode.com>"
 
-  THANKS TO
+THANKS TO
     Mark Ellzey <https://github.com/ellzey> for libevhtp
     <https://github.com/ellzey/libevhtp>.
 
@@ -295,7 +295,7 @@
     Dinis Rebolo <https://metacpan.org/author/DREBOLO> for testing this
     module.
 
-  COPYRIGHT AND LICENSE
+COPYRIGHT AND LICENSE
     Copyright 2016 Pedro Rodrigues (careca).
 
     This program is free software; you can redistribute it and/or modify it

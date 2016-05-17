@@ -1,8 +1,8 @@
-## NAME
+# NAME
 
 Cacilheiro - High performance PSGI handler using very fast [libevhtp](https://github.com/ellzey/libevhtp) HTTP API.
 
-## SYNOPSIS
+# SYNOPSIS
 
 Run app.psgi with default settings.
 
@@ -16,7 +16,7 @@ Run that-app.psgi with some settings.
 plackup -s Cacilheiro -E production --host 0.0.0.0 --port 5001 --max-workers 8 --max-reqs-per-child 1000000 -a that-app.psgi
 ```
 
-## DESCRIPTION
+# DESCRIPTION
 
 Cacilheiro is a Plack Handler that uses [libevhtp](https://github.com/ellzey/libevhtp) fast, multi-threaded HTTP API and [libevent2](http://libevent.org/).
 
@@ -24,26 +24,26 @@ Cacilheiro launches libevhtp server that becomes responsible for all incoming co
 
 This server should be used with a **multi-threaded perl** to allow cloning and management of perl contexts in libevhtp **(p)threads**, otherwise perl context won't be cloned and renewd (--max-reqs-per-child=Inf). **Maximum requests per child** should be kept **high** due to expensive perl\_clone.
 
-## OPTIONS
+# OPTIONS
 
-### --host (default: 0.0.0.0)
+#### --host (default: 0.0.0.0)
 
 Server bind address.
 
-### --port (default: 5000)
+#### --port (default: 5000)
 
 Server bind port.
 
-### --max-workers (default: 8)
+#### --max-workers (default: 8)
 
 Server worker threads.
 
-### --max-reqs-per-child (default: 0)
+#### --max-reqs-per-child (default: 0)
 
 Maximum number of requests to be handled before a perl context gets renewed (app clone).
 Disabled by default (app won't get renewed).
 
-## CLONE HANDLING EXAMPLE
+# CLONE HANDLING EXAMPLE
 
 ```perl
 ...
@@ -60,7 +60,7 @@ sub CLONE {
 ...
 ```
 
-## NOTES
+# NOTES
 
 This development aimed at delivering the fastest PSGI Handler to Perl.
 This project also shows a way to embed perl with an external C server (library) using [Inline::C](https://metacpan.org/pod/Inline::C).
@@ -72,7 +72,7 @@ External dependencies (source included):
 - Libevhtp fork car3ca/libevhtp, branch "feature/no\_auto\_ctype"
     - no automatic content-type header (HTTP 304 compliant)
 
-## INSTALATION
+# INSTALATION
 
 Dependencies:
 
@@ -89,7 +89,7 @@ make install
 
 Use git clone --recursive for submodule inclusion if installing from repo.
 
-## PERFORMANCE
+# PERFORMANCE
 
 These tests were performed locally on a HP Z230 Workstation:
 
@@ -307,7 +307,7 @@ Requests/sec:  81977.78
 Transfer/sec:     14.38MB
 ```
 
-## TODO
+# TODO
 
 ```
 * Preclone (prefork) context(s)
@@ -323,11 +323,11 @@ Transfer/sec:     14.38MB
 * Try other integrations (ex.: [h2o](https://h2o.examp1e.net/))
 ```
 
-## AUTHORS
+# AUTHORS
 
 Pedro Rodrigues (careca) `<car3ca at iberiancode.com>`
 
-## THANKS TO
+# THANKS TO
 
 [Mark Ellzey](https://github.com/ellzey) for [libevhtp](https://github.com/ellzey/libevhtp).
 
@@ -337,7 +337,7 @@ Pedro Rodrigues (careca) `<car3ca at iberiancode.com>`
 
 [Dinis Rebolo](https://metacpan.org/author/DREBOLO) for testing this module.
 
-## COPYRIGHT AND LICENSE
+# COPYRIGHT AND LICENSE
 
 Copyright 2016 Pedro Rodrigues (careca).
 
